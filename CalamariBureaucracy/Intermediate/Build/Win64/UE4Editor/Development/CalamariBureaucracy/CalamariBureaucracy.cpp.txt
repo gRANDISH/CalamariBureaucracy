@@ -1,0 +1,2 @@
+C:\Users\Matt\Documents\CalamariBureaucracy\CalamariBureaucracy\CalamariBureaucracy\Intermediate\Build\Win64\UE4Editor\Development\CalamariBureaucracy\Definitions.CalamariBureaucracy.h
+C:\Users\Matt\Documents\CalamariBureaucracy\CalamariBureaucracy\CalamariBureaucracy\Source\CalamariBureaucracy\CalamariBureaucracy.h
