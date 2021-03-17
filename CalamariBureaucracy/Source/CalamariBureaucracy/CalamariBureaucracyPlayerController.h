@@ -12,6 +12,7 @@ class ACalamariBureaucracyPlayerController : public APlayerController
 	GENERATED_BODY()
 
 public:
+	
 	ACalamariBureaucracyPlayerController();
 
 protected:
@@ -38,6 +39,10 @@ protected:
 	/** Input handlers for SetDestination action. */
 	void OnSetDestinationPressed();
 	void OnSetDestinationReleased();
+
+	/** Input Handling for AxisMovement, e.g. Controller or KB*/
+	void BlendedAxisMovement();
+	void dumb(const float InputValue);
 };
 
 

@@ -6,6 +6,7 @@
 #include "HeadMountedDisplayFunctionLibrary.h"
 #include "CalamariBureaucracyCharacter.h"
 #include "Engine/World.h"
+#include "../../../../../../../../Program Files/Epic Games/UE_4.26/Engine/Plugins/Experimental/BlastPlugin/Source/ThirdParty/lowlevel/include/NvPreprocessor.h"
 
 ACalamariBureaucracyPlayerController::ACalamariBureaucracyPlayerController()
 {
@@ -22,6 +23,8 @@ void ACalamariBureaucracyPlayerController::PlayerTick(float DeltaTime)
 	{
 		MoveToMouseCursor();
 	}
+	
+	BlendedAxisMovement();
 }
 
 void ACalamariBureaucracyPlayerController::SetupInputComponent()
@@ -37,6 +40,10 @@ void ACalamariBureaucracyPlayerController::SetupInputComponent()
 	InputComponent->BindTouch(EInputEvent::IE_Repeat, this, &ACalamariBureaucracyPlayerController::MoveToTouchLocation);
 
 	InputComponent->BindAction("ResetVR", IE_Pressed, this, &ACalamariBureaucracyPlayerController::OnResetVR);
+
+	// set up axis binding
+	InputComponent->BindAxis("MoveForward", this, &ACalamariBureaucracyPlayerController::dumb);
+	InputComponent->BindAxis("MoveRight", this, &ACalamariBureaucracyPlayerController::dumb);
 }
 
 void ACalamariBureaucracyPlayerController::OnResetVR()
@@ -110,3 +117,22 @@ void ACalamariBureaucracyPlayerController::OnSetDestinationReleased()
 	// clear flag to indicate we should stop updating the destination
 	bMoveToMouseCursor = false;
 }
+
+void ACalamariBureaucracyPlayerController::BlendedAxisMovement()
+{
+	if (abs(InputComponent->GetAxisValue(TEXT("MoveForward"))) > 0.0f || abs(InputComponent->GetAxisValue(TEXT("MoveRight"))) > 0.0f)
+	{
+		//blend the axis magnitudes and turn into a direction
+		FVector Dir;
+		Dir = FVector(InputComponent->GetAxisValue(TEXT("MoveForward")), InputComponent->GetAxisValue(TEXT("MoveRight")), 0.0f);
+
+		APawn* const MyPawn = GetPawn();
+		MyPawn->AddMovementInput(Dir, 1.0f, false);
+
+	}
+}
+
+void ACalamariBureaucracyPlayerController::dumb(const float AxisValue)
+{
+	return;
+};
