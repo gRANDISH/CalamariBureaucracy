@@ -42,8 +42,10 @@ void ACalamariBureaucracyPlayerController::SetupInputComponent()
 	InputComponent->BindAction("ResetVR", IE_Pressed, this, &ACalamariBureaucracyPlayerController::OnResetVR);
 
 	// set up axis binding
-	InputComponent->BindAxis("MoveForward", this, &ACalamariBureaucracyPlayerController::dumb);
-	InputComponent->BindAxis("MoveRight", this, &ACalamariBureaucracyPlayerController::dumb);
+	FInputAxisBinding ForwardInput = InputComponent->BindAxis("MoveForward", this, &ACalamariBureaucracyPlayerController::dumb);
+	ForwardInput.bConsumeInput = false;
+	FInputAxisBinding RightInput = InputComponent->BindAxis("MoveRight", this, &ACalamariBureaucracyPlayerController::dumb);
+	RightInput.bConsumeInput = false;
 }
 
 void ACalamariBureaucracyPlayerController::OnResetVR()
@@ -132,7 +134,8 @@ void ACalamariBureaucracyPlayerController::BlendedAxisMovement()
 	}
 }
 
-void ACalamariBureaucracyPlayerController::dumb(const float AxisValue)
+void ACalamariBureaucracyPlayerController::dumb(float AxisValue)
 {
+	//this seems dumb, as named; however, the right way to do the binding eludes me
 	return;
 };
